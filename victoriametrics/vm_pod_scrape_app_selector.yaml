@@ -1,0 +1,22 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
+metadata:
+  name: hip-billing-worker-app-scrape
+spec:
+  namespaceSelector:
+    matchNames:
+      - hiphosting
+  selector:
+    matchLabels:
+      app: hip-billing-worker-app
+  podMetricsEndpoints:
+    - port: metric # This is the port of the metrics endpoint defined in the deployment
+      path: /metrics
+      scheme: http
+      basicAuth:
+        username:
+          name: metrics-auth
+          key: username
+        password:
+          name: metrics-auth
+          key: password
